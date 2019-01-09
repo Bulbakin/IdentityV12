@@ -61,6 +61,9 @@ namespace IdentityV12.Areas.Identity.Pages.Account
 
             [Required]
             public string lastName { get; set; }
+
+            [Required]
+            public string role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -74,6 +77,7 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
 
+                
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, firstName = Input.firstName, lastName = Input.lastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
