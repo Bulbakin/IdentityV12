@@ -57,13 +57,15 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [Display(Name = "First name")]
             public string firstName { get; set; }
 
             [Required]
+            [Display(Name = "Last name")]
             public string lastName { get; set; }
 
-            [Required]
-            public string role { get; set; }
+            //[Required]
+            //public string role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
