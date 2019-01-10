@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using static IdentityV12.Models.ApplicationRole;
 
 namespace IdentityV12.Areas.Identity.Pages.Account
 {
@@ -64,8 +65,8 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             [Display(Name = "Last name")]
             public string lastName { get; set; }
 
-            //[Required]
-            //public string role { get; set; }
+            [Required]
+            public string role { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -79,7 +80,7 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
 
-                
+                var role = new AuthorizedAttribute { Roles = Input.role };
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, firstName = Input.firstName, lastName = Input.lastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

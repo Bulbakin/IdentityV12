@@ -14,6 +14,5 @@ namespace IdentityV12.Models
 
         [Required]
         public string lastName { get; set; }
-        
     }
 }
