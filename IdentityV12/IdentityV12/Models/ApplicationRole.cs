@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace IdentityV12.Models
     {
 
         public ApplicationRole() : base() { }
-        public ApplicationRole(string role) : base (role) { }
+        public ApplicationRole(string role) : base (role) { } 
     }
 }
 
