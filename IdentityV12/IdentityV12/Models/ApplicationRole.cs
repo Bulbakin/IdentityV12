@@ -10,10 +10,8 @@ namespace IdentityV12.Models
     public class ApplicationRole : IdentityRole
     {
 
-        public enum Role
-        {
-            Admin, Role1, Role2
-        }
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string role) : base (role) { }
     }
 }
 
