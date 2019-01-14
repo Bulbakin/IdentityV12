@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using static IdentityV12.Models.ApplicationRole;
 
@@ -39,7 +40,7 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
-
+            Roles();
         }
 
         [BindProperty]
@@ -73,7 +74,9 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             [Display(Name = "Last name")]
             public string lastName { get; set; }
 
-
+            [Required]
+            [Display(Name = "Roles")]
+            public List<String> roles { get; set; }
 
             //[Required]
             //public string role { get; set; }
@@ -84,16 +87,20 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+        public void Roles()
+        {
+            var roles = new List<string>();
+            foreach (dynamic a in _roleManager.Roles)
+            {
+                roles.Add(a.Name);
+            }
+            Input.roles = roles;
+            
+        }
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            var _roles = _roleManager.Roles;
-            String[] roles = new string[20];
-            int count = 0;
-            foreach (dynamic a in _roles)
-            {
-                 roles.SetValue(a.Name,count);
-                count++;
-            }
+            
 
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
@@ -106,8 +113,8 @@ namespace IdentityV12.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var roleResult = _userManager.AddToRoleAsync(user, roles.GetValue(0).ToString());
-                    var roleResult2 = await _userManager.AddToRoleAsync(user, roles.GetValue(1).ToString());
+                    var roleResult = _userManager.AddToRoleAsync(user, Input.roles.ToString());
+                    //var roleResult2 = await _userManager.AddToRoleAsync(user, roles.GetValue(1).ToString());
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
