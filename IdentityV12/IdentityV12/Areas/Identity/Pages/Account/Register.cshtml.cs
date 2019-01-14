@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IdentityV12.Data;
 using IdentityV12.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,20 +23,23 @@ namespace IdentityV12.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        //private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+
+
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
-            //RoleManager<ApplicationRole> roleManager)
+            IEmailSender emailSender,
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            //_roleManager = roleManager;
+            _roleManager = roleManager;
+
         }
 
         [BindProperty]
@@ -68,6 +73,8 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             [Display(Name = "Last name")]
             public string lastName { get; set; }
 
+
+
             //[Required]
             //public string role { get; set; }
         }
@@ -79,11 +86,20 @@ namespace IdentityV12.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            String[] roles = {"Admin", "Member"};
+            var _roles = _roleManager.Roles;
+            String[] roles = new string[20];
+            int count = 0;
+            foreach (dynamic a in _roles)
+            {
+                 roles.SetValue(a.Name,count);
+                count++;
+            }
 
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+
+                
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, firstName = Input.firstName, lastName = Input.lastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
