@@ -14,6 +14,7 @@ using IdentityV12.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityV12.Models;
+using IdentityV12.Areas.Identity.Pages.Account;
 
 namespace IdentityV12
 {
@@ -75,6 +76,7 @@ namespace IdentityV12
             });
 
             DummyData.Initialize(context, userManager, roleManager).Wait();
+            //RegisterModel register = new RegisterModel(roleManager);
         }
     }
 }

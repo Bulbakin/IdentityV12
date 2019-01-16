@@ -42,7 +42,14 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _roleManager = roleManager;
             
+
         }
+
+       /* public RegisterModel(RoleManager<ApplicationRole> roleManager)
+        {
+            _roleManager = roleManager;
+            Roles();
+        }*/
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -83,22 +90,23 @@ namespace IdentityV12.Areas.Identity.Pages.Account
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-           
+       
+
         }
 
-        public void Roles()
+        public List<string> Roles()
         {
             var roles = new List<string>();
             foreach (dynamic a in _roleManager.Roles)
             {
                 roles.Add(a.Name);
             }
-            Input.roles = roles;
+            return roles;
         }
 
         public ActionResult Register()
         {
-            Roles();
+            Input.roles = Roles();
             return RedirectToAction("Register", "Register");
         }
 

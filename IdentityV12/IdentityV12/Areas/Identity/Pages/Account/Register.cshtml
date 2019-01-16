@@ -44,7 +44,9 @@
             <div class="form-group">
                 <label asp-for="Input.roles"></label>
                 <select asp-for="Input.roles"></select>
-                
+                <h2>@Model.Roles()[0]</h2>
+                <h2>@Model.Roles()[1]</h2>
+
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>
