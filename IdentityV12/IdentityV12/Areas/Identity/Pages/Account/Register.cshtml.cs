@@ -99,18 +99,14 @@ namespace IdentityV12.Areas.Identity.Pages.Account
         public ActionResult Register()
         {
             Roles();
-            return Page();
+            return RedirectToAction("Register", "Register");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            
-
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-
-                
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, firstName = Input.firstName, lastName = Input.lastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
