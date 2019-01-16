@@ -84,7 +84,7 @@ namespace IdentityV12.Areas.Identity.Pages.Account
 
             //[Required]
             [Display(Name = "Roles")]
-            public List<string> roles { get; set; }
+            public string roles { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -104,12 +104,6 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             return roles;
         }
 
-        public ActionResult Register()
-        {
-            Input.roles = Roles();
-            return RedirectToAction("Register", "Register");
-        }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -121,8 +115,8 @@ namespace IdentityV12.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var roleResult = _userManager.AddToRoleAsync(user, Input.roles[0].ToString());
-                    var roleResult2 = await _userManager.AddToRoleAsync(user, Input.roles[1].ToString());
+                    var roleResult = await _userManager.AddToRoleAsync(user, Input.roles);
+                    //var roleResult2 = await _userManager.AddToRoleAsync(user, Input.roles[1].ToString());
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
