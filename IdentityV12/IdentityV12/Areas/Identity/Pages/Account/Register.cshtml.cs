@@ -82,9 +82,15 @@ namespace IdentityV12.Areas.Identity.Pages.Account
             [Display(Name = "Last name")]
             public string lastName { get; set; }
 
-            //[Required]
+            [Required]
             [Display(Name = "Roles")]
             public string roles { get; set; }
+
+            [Display(Name = "Roles")]
+            public string roles2 { get; set; }
+
+            //[Display(Name = "Roles")]
+            //public string roles3 { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -116,7 +122,10 @@ namespace IdentityV12.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var roleResult = await _userManager.AddToRoleAsync(user, Input.roles);
-                    //var roleResult2 = await _userManager.AddToRoleAsync(user, Input.roles[1].ToString());
+                    if (Input.roles2 != null)
+                    {
+                        var roleResult2 = await _userManager.AddToRoleAsync(user, Input.roles2);
+                    }
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
