@@ -75,7 +75,7 @@ namespace IdentityV12
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DummyData.Initialize(context, userManager, roleManager).Wait();
+            //DummyData.Initialize(context, userManager, roleManager).Wait();
             //RegisterModel register = new RegisterModel(roleManager);
         }
     }

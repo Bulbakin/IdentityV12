@@ -36,13 +36,5 @@ namespace IdentityV12.Areas.Identity.Pages.Account.Manage
 
             return Page();
         }
-
-        public async Task DeactivateAccount()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var roleResult = await _userManager.RemoveFromRoleAsync(user, "Admin");
-            await _signInManager.SignOutAsync();
-            return ;
-        }
     }
 }
